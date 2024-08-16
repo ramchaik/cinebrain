@@ -5,6 +5,10 @@ CineBrain is an intelligent movie recommender system that suggests similar movie
 # Demo
 
 
+https://github.com/user-attachments/assets/0a67e42f-faa6-4059-9cc0-a00dcebe53fb
+
+
+
 ## Table of Contents
 - [Project Overview](#project-overview)
 - [Dataset](#dataset)
