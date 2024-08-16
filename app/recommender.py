@@ -10,7 +10,6 @@ def recommend(movie):
     movie_idx = processed_df[processed_df['title'] == movie].index[0]
     distances = similarity[movie_idx]
     movie_list = sorted(list(enumerate(distances)), reverse=True, key=lambda x: x[1])[1:6]
-    print(movie_list)
 
     recommended_movies = []
     for m in movie_list:
