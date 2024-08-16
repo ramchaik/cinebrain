@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CineBrain: Movie Recommender</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/htmx.org@1.8.4"></script>
+</head>
+<body class="bg-gray-100">
+    <div class="max-w-2xl mx-auto my-10 p-6 bg-white rounded-lg shadow-lg">
+        <h1 class="text-3xl font-bold mb-6">CineBrain: Movie Recommender</h1>
+
+        <form hx-post="{{ url_for('main.recommend_movies') }}" hx-target="#recommendations" hx-swap="innerHTML">
+            <div class="mb-4">
+                <label for="selected_movie" class="block text-lg font-medium mb-2">Select a movie:</label>
+                <select class="block w-full border border-gray-300 rounded-md p-2" id="selected_movie" name="selected_movie" required>
+                    <option value="">-- Select a Movie --</option>
+                    {% for movie in movies %}
+                    <option value="{{ movie }}">{{ movie }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="w-full bg-blue-600 text-white font-semibold py-2 rounded-md hover:bg-blue-700 transition duration-200">
+                Get Recommendations
+            </button>
+        </form>
+    </div>
+
+    <!-- Recommendations Container -->
+    <div id="recommendations-container" class="max-w-full mx-auto mt-6 p-6 bg-gray-200 rounded-lg shadow-lg hidden">
+        <div id="recommendations"></div>
+    </div>
+    <script>
+        // Show the recommendations container only when there are recommendations
+        document.addEventListener('htmx:afterSwap', (event) => {
+            if (event.target.id === 'recommendations') {
+                const recommendationsContainer = document.getElementById('recommendations-container');
+                if (event.detail.xhr.status === 204) {
+                    recommendationsContainer.classList.add('hidden');
+                } else {
+                    recommendationsContainer.classList.remove('hidden');
+                }
+            }
+        });
+    </script>
+</body>
+</html>
